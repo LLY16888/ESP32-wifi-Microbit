@@ -50,9 +50,9 @@ namespace WIFI_Camera {
     {
         switch (mode)
         {
-            case MODE_selcet.APOnly: serial.writeLine("wifi_mode:0"); break;
-            case MODE_selcet.STAOnly:serial.writeLine("wifi_mode:1"); break;
-            case MODE_selcet.AP_STA: serial.writeLine("wifi_mode:2"); break;
+            case MODE_selcet.APOnly: serial.writeString("wifi_mode:0"); break;
+            case MODE_selcet.STAOnly:serial.writeString("wifi_mode:1"); break;
+            case MODE_selcet.AP_STA: serial.writeString("wifi_mode:2"); break;
         }
         basic.pause(2000)
        
@@ -66,7 +66,7 @@ namespace WIFI_Camera {
     //% group="SET STA WIFI"
     export function setSTASSID(SSID:string)
     {
-        serial.writeLine("sta_ssid:"+SSID)
+        serial.writeString("sta_ssid:"+SSID)
         basic.pause(200) //等待重启成功
     }
 
@@ -76,7 +76,7 @@ namespace WIFI_Camera {
     //% group="SET STA WIFI"
     export function setSTAPD(Password:string)
     {
-        serial.writeLine("sta_pd:"+Password)
+        serial.writeString("sta_pd:"+Password)
         basic.pause(2000)
     }
 
@@ -88,7 +88,7 @@ namespace WIFI_Camera {
     //% group="SET AP WIFI"
     export function setAPSSID(SSID:string)
     {
-        serial.writeLine("ap_ssid:"+SSID)
+        serial.writeString("ap_ssid:"+SSID)
         basic.pause(200)
     }
 
@@ -98,7 +98,7 @@ namespace WIFI_Camera {
     //% group="SET AP WIFI"
     export function setAPPD(Password:string)
     {
-        serial.writeLine("ap_pd:"+Password)
+        serial.writeString("ap_pd:"+Password)
         basic.pause(2000)
     }
 
@@ -108,7 +108,7 @@ namespace WIFI_Camera {
     //% group="GET WIFI IP"
     export function GET_AP_IP():string
     {
-        serial.writeLine("ap_ip")
+        serial.writeString("ap_ip")
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
     }
 
@@ -118,7 +118,7 @@ namespace WIFI_Camera {
     //% group="GET WIFI IP"
     export function GET_STA_IP():string
     {
-        serial.writeLine("sta_ip")
+        serial.writeString("sta_ip")
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
         
     }
