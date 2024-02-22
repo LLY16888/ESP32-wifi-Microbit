@@ -54,7 +54,9 @@ namespace WIFI_Camera {
             case MODE_selcet.STAOnly:serial.writeString("wifi_mode:1"); break;
             case MODE_selcet.AP_STA: serial.writeString("wifi_mode:2"); break;
         }
-        basic.pause(2000)
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
+
        
     }
 
@@ -67,7 +69,8 @@ namespace WIFI_Camera {
     export function setSTASSID(SSID:string)
     {
         serial.writeString("sta_ssid:"+SSID)
-        basic.pause(200) //等待重启成功
+        basic.pause(500) 
+        serial.readString() //目的是为了清掉缓存
     }
 
     //% blockId=setSTAPD block="set STA PASSWord|wifi password %Password"
@@ -77,7 +80,8 @@ namespace WIFI_Camera {
     export function setSTAPD(Password:string)
     {
         serial.writeString("sta_pd:"+Password)
-        basic.pause(2000)
+        basic.pause(4000)//等待重启成功
+        serial.readString() //目的是为了清掉缓存
     }
 
     //wifi配置 ap模式
@@ -89,7 +93,8 @@ namespace WIFI_Camera {
     export function setAPSSID(SSID:string)
     {
         serial.writeString("ap_ssid:"+SSID)
-        basic.pause(200)
+        basic.pause(500)
+        serial.readString() //目的是为了清掉缓存
     }
 
     //% blockId=setAPPD block="set AP PASSWord|wifi password %Password"
@@ -99,7 +104,8 @@ namespace WIFI_Camera {
     export function setAPPD(Password:string)
     {
         serial.writeString("ap_pd:"+Password)
-        basic.pause(2000)
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
     }
 
     //% blockId=GET_AP_IP block=GET_AP_IP
@@ -129,7 +135,7 @@ namespace WIFI_Camera {
     //% group="GET WIFI Version"
     export function GET_Version():string
     {
-        serial.writeLine("wifi_ver")
+        serial.writeString("wifi_ver")
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
     }
 
