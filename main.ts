@@ -13,7 +13,7 @@ namespace WIFI_Camera {
         AP_STA
     }
 
-    //% block="init_SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
+    //% block="init SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
     //% group="SET SerialPort"
     export function initialization (TX:SerialPin,RX:SerialPin,buadrate:BaudRate) {
         serial.redirect(
@@ -23,7 +23,7 @@ namespace WIFI_Camera {
         )
     }
 
-    //% blockId=setRXbuffSize block="SetRXbuffSize|size %size"
+    //% blockId=setRXbuffSize block="Set RXbuffSize|size %size"
     //% weight=88
     //% blockGap=10
     //% group="SET SerialPort"
@@ -32,7 +32,7 @@ namespace WIFI_Camera {
         serial.setRxBufferSize(size)
     }
     
-    //% blockId=setTXbuffSize block="SetTXbuffSize |size %size"
+    //% blockId=setTXbuffSize block="Set TXbuffSize|size %size"
     //% weight=88
     //% blockGap=10
     //% group="SET SerialPort"
@@ -42,7 +42,7 @@ namespace WIFI_Camera {
     }
 
     //wifi模式配置
-    //% blockId=setWifiMode block="setWifiMode|MODE Selcet %mode"
+    //% blockId=setWifiMode block="Set Wifi Mode Selcet %mode"
     //% weight=88
     //% blockGap=10
     //% group="SET WIFI MODE"
@@ -60,45 +60,45 @@ namespace WIFI_Camera {
 
     //wifi配置 sta模式
 
-    //% blockId=setSTASSID block="setSTASSID|wifi name %SSID"
+    //% blockId=setSTASSID block="set STA SSID|wifi name %SSID"
     //% weight=88
     //% blockGap=10
     //% group="SET STA WIFI"
     export function setSTASSID(SSID:string)
     {
-        serial.writeLine(SSID)
+        serial.writeLine("sta_ssid:"+SSID)
         basic.pause(200) //等待重启成功
     }
 
-    //% blockId=setSTAPD block="setSTAPD|wifi password %Password"
+    //% blockId=setSTAPD block="set STA PASSWord|wifi password %Password"
     //% weight=88
     //% blockGap=10
     //% group="SET STA WIFI"
     export function setSTAPD(Password:string)
     {
-        serial.writeLine(Password)
+        serial.writeLine("sta_pd:"+Password)
         basic.pause(2000)
     }
 
     //wifi配置 ap模式
 
-    //% blockId=setAPSSID block="setAPSSID|wifi name %SSID"
+    //% blockId=setAPSSID block="set AP SSID|wifi name %SSID"
     //% weight=88
     //% blockGap=10
     //% group="SET AP WIFI"
     export function setAPSSID(SSID:string)
     {
-        serial.writeLine(SSID)
+        serial.writeLine("ap_ssid:"+SSID)
         basic.pause(200)
     }
 
-    //% blockId=setAPPD block="setAPPD|wifi password %Password"
+    //% blockId=setAPPD block="set AP PASSWord|wifi password %Password"
     //% weight=88
     //% blockGap=10
     //% group="SET AP WIFI"
     export function setAPPD(Password:string)
     {
-        serial.writeLine(Password)
+        serial.writeLine("ap_pd:"+Password)
         basic.pause(2000)
     }
 
@@ -110,7 +110,6 @@ namespace WIFI_Camera {
     {
         serial.writeLine("ap_ip")
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
-
     }
 
     //% blockId=GET_STA_IP block=GET_STA_IP
@@ -132,6 +131,17 @@ namespace WIFI_Camera {
     {
         serial.writeLine("wifi_ver")
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
+    }
+
+     //% blockId=GET_controlData block=GET_Control_Data
+    //% weight=88
+    //% blockGap=10
+    //% group="GET Data"
+    export function GET_controlData():string
+    {
+        let buff
+        buff = serial.readString()
+        return buff
     }
 
 }

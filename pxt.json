@@ -10,7 +10,8 @@
     },
     "files": [
         "README.md",
-        "_locales/zh-cn/ESP32 Wifi-strings.json",
+        "_locales/zh-cn/WIFI Camera-strings.json",
+        "_locales/zh-tw/WIFI Camera-strings.json",
         "main.ts"
     ],
     "testFiles": [

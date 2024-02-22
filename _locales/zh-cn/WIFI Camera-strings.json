@@ -1,0 +1,37 @@
+
+{
+  "WIFI_Camera|block":"wifi摄像头",
+  "{id:category}WIFI_Camera":"WIFI_Camera",
+
+  "{id:group}SET SerialPort": "串口配置",
+  "{id:group}SET WIFI MODE": "设置wifi模式",
+  "{id:group}SET STA WIFI": "配置连接wifi",
+  "{id:group}SET AP WIFI": "配置自发热点",
+  "{id:group}GET WIFI IP": "获取Wifi的ip地址",
+  "{id:group}GET WIFI Version": "获取wifi固件版本",
+  "{id:group}GET Data": "获取透传的数据",
+  
+  "WIFI_Camera.initialization|block":"串口初始化|发送引脚 %TX|接收引脚 %RX|波特率 %buadrate",
+  "WIFI_Camera.setRXbuffSize|block":"设置串口接收缓冲器的大小|大小长度 %size",
+  "WIFI_Camera.setTXbuffSize|block":"设置串口发送缓冲器的大小|大小长度 %size",
+
+  "WIFI_Camera.setWifiMode|block":"设置wifi的工作模式 %mode",
+
+  "WIFI_Camera.setSTASSID|block":"设置要连接的wifi名称 %SSID",
+  "WIFI_Camera.setSTAPD|block":"设置要连接的wifi密码 %Password",
+
+  "WIFI_Camera.setAPSSID|block":"设置自发热点的wifi名称 %SSID",
+  "WIFI_Camera.setAPPD|block":"设置自发热点的wifi密码 %Password",
+
+  "WIFI_Camera.GET_AP_IP|block":"获取热点模式的ip地址",
+  "WIFI_Camera.GET_STA_IP|block":"获取连接wifi模式的ip地址",
+  
+  "WIFI_Camera.GET_Version|block":"获取固件版本号",
+  "WIFI_Camera.GET_controlData|block":"获取透传的数据",
+  
+  "WIFI_Camera.MODE_selcet.APOnly|block":"仅自发热点模式",
+  "WIFI_Camera.MODE_selcet.STAOnly|block":"仅连接wifi模式",
+  "WIFI_Camera.MODE_selcet.AP_STA|block":"自发热点和连接wifi共存模式"
+}
+
+
