@@ -127,7 +127,7 @@ namespace WIFI_Camera {
         serial.readString() //目的是为了清掉缓存
     }
 
-    //% blockId=GET_AP_IP block=GET_AP_IP
+    //% blockId=GET_AP_IP block="GET_AP_IP"
     //% weight=88
     //% blockGap=10
     //% group="GET WIFI IP"
@@ -137,7 +137,7 @@ namespace WIFI_Camera {
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
     }
 
-    //% blockId=GET_STA_IP block=GET_STA_IP
+    //% blockId=GET_STA_IP block="GET_STA_IP"
     //% weight=88
     //% blockGap=10
     //% group="GET WIFI IP"
@@ -148,7 +148,7 @@ namespace WIFI_Camera {
         
     }
 
-    //% blockId=GET_Version block=GET_Version
+    //% blockId=GET_Version block="GET_Version"
     //% weight=88
     //% blockGap=10
     //% group="GET WIFI Version"
@@ -158,7 +158,7 @@ namespace WIFI_Camera {
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
     }
 
-    //% blockId=GET_controlData block=GET_Control_Data
+    //% blockId=GET_controlData block="GET_Control_Data"
     //% weight=88
     //% blockGap=10
     //% group="GET Data"
@@ -169,7 +169,7 @@ namespace WIFI_Camera {
         return buff
     }
 
-    //% blockId=CarControl block=Control_Car
+    //% blockId=CarControl block="Control_Car %value"
     //% weight=88
     //% blockGap=10
     //% group="Car control"

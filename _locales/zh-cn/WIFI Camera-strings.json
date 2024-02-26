@@ -30,7 +30,7 @@
   "WIFI_Camera.GET_Version|block":"获取固件版本号",
   "WIFI_Camera.GET_controlData|block":"获取透传的数据",
 
-  "WIFI_Camera.CarControl|block":"小车控制",
+  "WIFI_Camera.CarControl|block":"小车控制 %value",
 
   
   "WIFI_Camera.MODE_selcet.APOnly|block":"仅自发热点模式",

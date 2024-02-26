@@ -30,7 +30,7 @@
   "WIFI_Camera.GET_Version|block":"獲取固件版本號",
   "WIFI_Camera.GET_controlData|block":"獲取透傳的數據",
 
-  "WIFI_Camera.CarControl|block":"小車控制",
+  "WIFI_Camera.CarControl|block":"小車控制 %value",
   
   "WIFI_Camera.MODE_selcet.APOnly|block":"僅自發熱點模式",
   "WIFI_Camera.MODE_selcet.STAOnly|block":"僅連接wifi模式",
