@@ -13,6 +13,25 @@ namespace WIFI_Camera {
         AP_STA
     }
 
+    export enum Cmd_Data
+    {
+        //% blockId="forword" block="forword"
+        forword = 1,
+        //% blockId="back" block="back"
+        back,
+        //% blockId="left" block="left"
+        left,
+        //% blockId="right" block="right"
+        right,
+        //% blockId="leftspin" block="leftspin"
+        leftspin,
+        //% blockId="rightspin" block="rightspin"
+        rightspin,
+        //% blockId="stop" block="stop"
+        stop
+
+    }
+
     //% block="init SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
     //% group="SET SerialPort"
     export function initialization (TX:SerialPin,RX:SerialPin,buadrate:BaudRate) {
@@ -139,7 +158,7 @@ namespace WIFI_Camera {
         return serial.readUntil(serial.delimiters(Delimiters.NewLine))
     }
 
-     //% blockId=GET_controlData block=GET_Control_Data
+    //% blockId=GET_controlData block=GET_Control_Data
     //% weight=88
     //% blockGap=10
     //% group="GET Data"
@@ -148,6 +167,27 @@ namespace WIFI_Camera {
         let buff
         buff = serial.readString()
         return buff
+    }
+
+    //% blockId=CarControl block=Control_Car
+    //% weight=88
+    //% blockGap=10
+    //% group="Car control"
+    export function CarControl(value:Cmd_Data):string
+    {
+        let databuff = "$1,0,0,0#"
+        switch(value)
+        {
+            case Cmd_Data.forword:databuff = "$1,0,0,0#";   break
+            case Cmd_Data.back:databuff = "$2,0,0,0#";      break
+            case Cmd_Data.left:databuff = "$3,0,0,0#";      break
+            case Cmd_Data.right:databuff = "$4,0,0,0#";     break
+            case Cmd_Data.leftspin:databuff = "$5,0,0,0#";  break
+            case Cmd_Data.rightspin:databuff = "$6,0,0,0#"; break
+            case Cmd_Data.stop:databuff = "$7,0,0,0#";      break
+        }
+
+        return databuff
     }
 
 }

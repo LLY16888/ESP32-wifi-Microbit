@@ -10,6 +10,7 @@
   "{id:group}GET WIFI IP": "获取Wifi的ip地址",
   "{id:group}GET WIFI Version": "获取wifi固件版本",
   "{id:group}GET Data": "获取透传的数据",
+  "{id:group}Car control": "小车指令",
   
   "WIFI_Camera.initialization|block":"串口初始化|发送引脚 %TX|接收引脚 %RX|波特率 %buadrate",
   "WIFI_Camera.setRXbuffSize|block":"设置串口接收缓冲器的大小|大小长度 %size",
@@ -28,10 +29,21 @@
   
   "WIFI_Camera.GET_Version|block":"获取固件版本号",
   "WIFI_Camera.GET_controlData|block":"获取透传的数据",
+
+  "WIFI_Camera.CarControl|block":"小车控制",
+
   
   "WIFI_Camera.MODE_selcet.APOnly|block":"仅自发热点模式",
   "WIFI_Camera.MODE_selcet.STAOnly|block":"仅连接wifi模式",
-  "WIFI_Camera.MODE_selcet.AP_STA|block":"自发热点和连接wifi共存模式"
+  
+  "WIFI_Camera.Cmd_Data.forword|block":"前进指令",
+  "WIFI_Camera.Cmd_Data.back|block":"后退指令",
+  "WIFI_Camera.Cmd_Data.left|block":"左转指令",
+  "WIFI_Camera.Cmd_Data.right|block":"右转指令",
+  "WIFI_Camera.Cmd_Data.leftspin|block":"左旋指令",
+  "WIFI_Camera.Cmd_Data.rightspin|block":"右旋指令",
+  "WIFI_Camera.Cmd_Data.stop|block":"停止指令"
+
 }
 
 
