@@ -28,14 +28,16 @@ namespace WIFI_Camera {
         //% blockId="rightspin" block="rightspin"
         rightspin,
         //% blockId="stop" block="stop"
-        stop,
+        stop
+    }
 
+    export enum Sever_Data
+    {
         //% blockId="sevro_vflip" block="sevro_vflip"
         sevro_vflip,
 
         //% blockId="sevro_mirror" block="sevro_mirror"
         sevro_mirror
-
     }
 
     //% block="init SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
@@ -204,31 +206,51 @@ namespace WIFI_Camera {
     //% weight=88
     //% blockGap=10
     //% group="Servo"
-    export function Servodirection(strData:string):Cmd_Data
+    export function Servodirection(strData:string):Sever_Data
     {
-        let dataflag = Cmd_Data.sevro_vflip
+        let dataflag = Sever_Data.sevro_vflip
 
         let databuff = ""
         let angle = 90
-        if (strData[1] == "A")  //$A180# 垂直方向
+        if(strData[0] == "$" && strData[5] == "#")//满足包头包尾
         {
-            databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
-            angle = parseInt(databuff); //字符转成整形
-            sevro_vflip_angle = angle; //赋值
-            dataflag = Cmd_Data.sevro_vflip
-        } 
-
-        else if(strData[1] == "B") //$B090# 水平方向
-        {
-            databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
-            angle = parseInt(databuff); //字符转成整形
-            sevro_mirror_angle = angle; //赋值
-            dataflag = Cmd_Data.sevro_mirror
+            if (strData[1] == "A")  //$A180# 垂直方向
+            {
+                databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                angle = parseInt(databuff); //字符转成整形
+                sevro_vflip_angle = angle; //赋值
+                dataflag = Sever_Data.sevro_vflip
+            } 
+    
+            else if(strData[1] == "B") //$B090# 水平方向
+            {
+                databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                angle = parseInt(databuff); //字符转成整形
+                sevro_mirror_angle = angle; //赋值
+                dataflag = Sever_Data.sevro_mirror
+            }
 
         }
+        
         //basic.showString 待删
         return dataflag
     }
+
+    //% blockId=Servo_Control block="Servo_Control %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Servo_Control(value:Sever_Data):Sever_Data
+    {
+        switch(value)
+        {
+            case Sever_Data.sevro_mirror: return Sever_Data.sevro_mirror
+            case Sever_Data.sevro_vflip: return Sever_Data.sevro_vflip
+        }
+
+    }
+
+
 
     //% blockId=Get_vflip_Servoangle block="Get vflip Servo angle"
     //% weight=88

@@ -33,6 +33,7 @@
 
   "WIFI_Camera.CarControl|block":"小車控制 %value",
 
+  "WIFI_Camera.Servo_Control|block":"舵機控制 %value",
   "WIFI_Camera.Servodirection|block":"解析舵機方向 %strData",
 
   "WIFI_Camera.Get_vflip_Servoangle|block":"獲取垂直方向舵機的角度",
@@ -50,8 +51,8 @@
   "WIFI_Camera.Cmd_Data.rightspin|block":"右旋指令",
   "WIFI_Camera.Cmd_Data.stop|block":"停止指令",
 
-  "WIFI_Camera.Cmd_Data.sevro_vflip|block":"舵機垂直方向",
-  "WIFI_Camera.Cmd_Data.stop|sevro_mirror":"舵機水平方向"
+  "WIFI_Camera.Sever_Data.sevro_vflip|block":"舵機垂直方向",
+  "WIFI_Camera.Sever_Data.sevro_mirror|sevro_mirror":"舵機水平方向"
 }
 
 
