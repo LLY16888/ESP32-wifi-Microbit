@@ -28,7 +28,13 @@ namespace WIFI_Camera {
         //% blockId="rightspin" block="rightspin"
         rightspin,
         //% blockId="stop" block="stop"
-        stop
+        stop,
+
+        //% blockId="sevro_vflip" block="sevro_vflip"
+        sevro_vflip,
+
+        //% blockId="sevro_mirror" block="sevro_mirror"
+        sevro_mirror
 
     }
 
@@ -189,5 +195,59 @@ namespace WIFI_Camera {
 
         return databuff
     }
+
+
+    let  sevro_vflip_angle = 0; //上下方向舵机角度
+    let  sevro_mirror_angle = 0;//左右方向舵机角度
+
+    //% blockId=Servodirection block="direction_Servo %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Servodirection(strData:string):Cmd_Data
+    {
+        let dataflag = Cmd_Data.sevro_vflip
+
+        let databuff = ""
+        let angle = 90
+        if (strData[1] == "A")  //$A180# 垂直方向
+        {
+            databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+            angle = parseInt(databuff); //字符转成整形
+            sevro_vflip_angle = angle; //赋值
+            dataflag = Cmd_Data.sevro_vflip
+        } 
+
+        else if(strData[1] == "B") //$B090# 水平方向
+        {
+            databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+            angle = parseInt(databuff); //字符转成整形
+            sevro_mirror_angle = angle; //赋值
+            dataflag = Cmd_Data.sevro_mirror
+
+        }
+        //basic.showString 待删
+        return dataflag
+    }
+
+    //% blockId=Get_vflip_Servoangle block="Get vflip Servo angle"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Get_vflip_Servoangle():number
+    {
+        return sevro_vflip_angle
+    }
+
+    //% blockId=Get_mirror_Servoangle block="Get mirror Servo angle"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Get_mirror_Servoangle():number
+    {
+        return sevro_mirror_angle
+    }
+
+
 
 }

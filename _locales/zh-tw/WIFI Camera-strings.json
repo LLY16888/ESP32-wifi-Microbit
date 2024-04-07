@@ -11,6 +11,7 @@
   "{id:group}GET WIFI Version": "獲取wifi固件版本",
   "{id:group}GET Data": "獲取透傳的數據",
   "{id:group}Car control": "小車指令",
+  "{id:group}Servo":"舵機",
   
   "WIFI_Camera.initialization|block":"串口初始化|發送引脚 %TX|接收引脚 %RX|波特率 %buadrate",
   "WIFI_Camera.setRXbuffSize|block":"設置串口接收緩衝區的大小|大小長度 %size",
@@ -31,6 +32,11 @@
   "WIFI_Camera.GET_controlData|block":"獲取透傳的數據",
 
   "WIFI_Camera.CarControl|block":"小車控制 %value",
+
+  "WIFI_Camera.Servodirection|block":"解析舵機方向 %strData",
+
+  "WIFI_Camera.Get_vflip_Servoangle|block":"獲取垂直方向舵機的角度",
+  "WIFI_Camera.Get_mirror_Servoangle|block":"獲取水平方向舵機的角度",
   
   "WIFI_Camera.MODE_selcet.APOnly|block":"僅自發熱點模式",
   "WIFI_Camera.MODE_selcet.STAOnly|block":"僅連接wifi模式",
@@ -42,7 +48,10 @@
   "WIFI_Camera.Cmd_Data.right|block":"右轉指令",
   "WIFI_Camera.Cmd_Data.leftspin|block":"左旋指令",
   "WIFI_Camera.Cmd_Data.rightspin|block":"右旋指令",
-  "WIFI_Camera.Cmd_Data.stop|block":"停止指令"
+  "WIFI_Camera.Cmd_Data.stop|block":"停止指令",
+
+  "WIFI_Camera.Cmd_Data.sevro_vflip|block":"舵機垂直方向",
+  "WIFI_Camera.Cmd_Data.stop|sevro_mirror":"舵機水平方向"
 }
 
 
