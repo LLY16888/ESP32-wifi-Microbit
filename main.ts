@@ -212,25 +212,27 @@ namespace WIFI_Camera {
 
         let databuff = ""
         let angle = 90
-        if(strData[0] == "$" && strData[5] == "#")//满足包头包尾
-        {
-            if (strData[1] == "A")  //$A180# 垂直方向
-            {
-                databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
-                angle = parseInt(databuff); //字符转成整形
-                sevro_vflip_angle = angle; //赋值
-                dataflag = Sever_Data.sevro_vflip
-            } 
-    
-            else if(strData[1] == "B") //$B090# 水平方向
-            {
-                databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
-                angle = parseInt(databuff); //字符转成整形
-                sevro_mirror_angle = angle; //赋值
-                dataflag = Sever_Data.sevro_mirror
-            }
 
-        }
+        if(strData[0] == "$")//满足包头包尾
+            if(strData[5] == "#")
+            {
+                if (strData[1] == "A")  //$A180# 垂直方向
+                {
+                    databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                    angle = parseInt(databuff); //字符转成整形
+                    sevro_vflip_angle = angle; //赋值
+                    dataflag = Sever_Data.sevro_vflip
+                } 
+        
+                else if(strData[1] == "B") //$B090# 水平方向
+                {
+                    databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                    angle = parseInt(databuff); //字符转成整形
+                    sevro_mirror_angle = angle; //赋值
+                    dataflag = Sever_Data.sevro_mirror
+                }
+
+            }
         
         //basic.showString 待删
         return dataflag
