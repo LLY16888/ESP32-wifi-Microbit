@@ -52,7 +52,7 @@
   "WIFI_Camera.Cmd_Data.stop|block":"停止指令",
 
   "WIFI_Camera.Sever_Data.sevro_vflip|block":"舵机垂直方向",
-  "WIFI_Camera.Sever_Data.sevro_mirror|sevro_mirror":"舵机水平方向"
+  "WIFI_Camera.Sever_Data.sevro_mirror|block":"舵机水平方向"
 
 }
 
