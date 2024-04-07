@@ -37,7 +37,10 @@ namespace WIFI_Camera {
         sevro_vflip,
 
         //% blockId="sevro_mirror" block="sevro_mirror"
-        sevro_mirror
+        sevro_mirror,
+
+        //% blockId="sevro_NONE" block="sevro_NONE"
+        sevro_NONE,
     }
 
     //% block="init SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
@@ -208,7 +211,7 @@ namespace WIFI_Camera {
     //% group="Servo"
     export function Servodirection(strData:string):Sever_Data
     {
-        let dataflag = Sever_Data.sevro_vflip
+        let dataflag = Sever_Data.sevro_NONE //什么数据都没有
 
         let databuff = ""
         let angle = 90
@@ -234,7 +237,6 @@ namespace WIFI_Camera {
 
             }
         
-        //basic.showString 待删
         return dataflag
     }
 
@@ -249,6 +251,7 @@ namespace WIFI_Camera {
             case Sever_Data.sevro_mirror: return Sever_Data.sevro_mirror
             case Sever_Data.sevro_vflip: return Sever_Data.sevro_vflip
         }
+        return Sever_Data.sevro_NONE
 
     }
 
