@@ -2,6 +2,33 @@
 //%color="#228B22" weight=25 icon="\uf06e"
 namespace WIFI_Camera {
 
+    export enum AIMODE_selcet
+    {
+        //% blockId="Nornal" block="Nornal"
+        Nornal = 0,
+        //% blockId="Cat_Dog_MODE" block="Cat_Dog_MODE"
+        Cat_Dog_MODE,
+        //% blockId="Face_MODE" block="Face_MODE"
+        Face_MODE,
+        //% blockId="Color_MODE" block="Color_MODE"
+        Color_MODE,
+        //% blockId="Study_Face_MODE" block="Study_Face_MODE"
+        Study_Face_MODE,
+        //% blockId="QR_MODE" block="QR_MODE"
+        QR_MODE, 
+    }
+
+    export enum KEY_Model
+    {
+        //% blockId="KEY_MENU" block="KEY_MENU"
+        KEY_MENU = 0,
+        //% blockId="KEY_PLAY" block="KEY_PLAY"
+        KEY_PLAY,
+        //% blockId="KEY_UPUP" block="KEY_UPUP"
+        KEY_UPUP,
+        //% blockId="KEY_DOWN" block="KEY_DOWN"
+        KEY_DOWN,
+    }
 
     export enum MODE_selcet
     {
@@ -275,6 +302,150 @@ namespace WIFI_Camera {
         return sevro_mirror_angle
     }
 
+    //AI模式配置
+    //% blockId=setAIMode block="Set AI Mode Selcet %mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function setAIMode(mode:AIMODE_selcet)
+    {
+        switch (mode)
+        {
+            case AIMODE_selcet.Nornal: serial.writeString("ai_mode:0"); break;
+            case AIMODE_selcet.Cat_Dog_MODE:serial.writeString("ai_mode:1"); break;
+            case AIMODE_selcet.Face_MODE: serial.writeString("ai_mode:2"); break;
+            case AIMODE_selcet.Color_MODE: serial.writeString("ai_mode:3"); break;
+            case AIMODE_selcet.Study_Face_MODE:serial.writeString("ai_mode:4"); break;
+            case AIMODE_selcet.QR_MODE: serial.writeString("ai_mode:5"); break;
+        }
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //虚拟按键
+    //% blockId=SendKEY block="SendKEY %mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function SendKEY(mode:KEY_Model)
+    {
+        switch (mode)
+        {
+            case KEY_Model.KEY_MENU: serial.writeString("KEY_MENU"); break;
+            case KEY_Model.KEY_PLAY: serial.writeString("KEY_PLAY"); break;
+            case KEY_Model.KEY_UPUP: serial.writeString("KEY_UPUP"); break;
+            case KEY_Model.KEY_DOWN: serial.writeString("KEY_DOWN"); break;
+        }
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    
+    let LX_int = 0;
+    let LY_int = 0;
+    let RX_int = 0;
+    let RY_int = 0;
+    let center_X = 160; //分辨率是320*240
+    let center_Y = 120;
+
+    //猫狗检测的协议解析
+    //% blockId=Cat_Dog_Data block="Cat_Dog_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function Cat_Dog_Data(strData:string):number
+    {
+        let databuff = ""
+        let state = 0
+        let index = 0
+        let len = 0
+
+        let Lx_str = ""
+        let Ly_str = ""
+        let Rx_str = ""
+        let Ry_str = ""
+
+        while(strData[index] != "\0")//先把有效数据复制出来
+        {
+            if(state == 0)
+            {
+                if(strData[index] == "$")//满足包头
+                {
+                    state = 1
+                    databuff = "$"
+                }
+            }
+            else if(state == 1)
+            {
+                databuff = databuff + strData[index]
+            }
+            
+
+            if(strData[index] == "#")//满足包尾
+            {
+                index= index+1
+                len = index
+                index = 1 //索引变1 ，方便后面去掉包头
+                break;
+            }
+            else
+            {
+                index= index+1
+            }
+             
+
+        }
+        if (state == 0)//当数据不存在
+        {
+            return 0;
+        }
+
+        //解算左上角xy 右下角xy $180,240,#
+        while(databuff[index]!=",") //不为英文","
+        {
+            //左上角X
+            Lx_str = Lx_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //左上角Y
+            Ly_str = Ly_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //右下角X
+            Rx_str = Rx_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //右下角Y
+            Ry_str = Ry_str + databuff[index];
+            index = 1+ index;
+        }
+
+        //把字符变整数
+        LX_int = parseInt(Lx_str); //字符转成整形
+        LY_int = parseInt(Ly_str); //字符转成整形
+        RX_int = parseInt(Rx_str); //字符转成整形
+        RY_int = parseInt(Ry_str); //字符转成整形
+
+        center_X = (RX_int-LX_int)/2
+        center_Y = (RY_int-LY_int)/2
+
+        //测试下
+        serial.writeString(""+center_X+"aaa") 
+
+        return 1; //成功
+
+    }
 
 
 }
