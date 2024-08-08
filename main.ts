@@ -551,8 +551,6 @@ namespace WIFI_Camera {
 
        while(strData[index] != "\0")
        {
-           index = index + 1
-
            if(state == 0)
            {
                if(strData[index] == "$")
@@ -565,14 +563,15 @@ namespace WIFI_Camera {
                if(strData[index] == "#") //为结束符
                    break
                 QR_buf = QR_buf + strData[index] //把识别到的字符拿出来
-           }   
+           } 
+           index = index + 1  
        }
 
        if(state == 0 ) //没数据的情况
        {
-           return "-1";
+           return "0";
        }
-
+       
        return QR_buf
     }
 
