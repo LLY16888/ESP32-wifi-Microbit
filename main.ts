@@ -346,6 +346,37 @@ namespace WIFI_Camera {
     let RY_int = 0;
     let center_X = 160; //分辨率是320*240
     let center_Y = 120;
+    let Area = 0; //面积
+
+    //获取中心点X轴方向
+    //% blockId=GET_CX block="GET_CX"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_CX():number
+    {
+        return center_X
+    }
+
+    //获取中心点Y轴方向
+    //% blockId=GET_CY block="GET_CY"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_CY():number
+    {
+        return center_Y
+    }
+
+    //获取第一个框的面积
+    //% blockId=GET_Area block="GET_Area"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_Area():number
+    {
+        return center_Y
+    }
 
     //猫狗检测、人脸检测、颜色识别的协议解析
     //% blockId=Detection_Data block="Detection_Data %strData"
@@ -440,6 +471,8 @@ namespace WIFI_Camera {
         center_X = (RX_int-LX_int)/2
         center_Y = (RY_int-LY_int)/2
 
+        Area = (RX_int-LX_int)*(RY_int-LY_int)
+
         // //测试下
         // serial.writeString(""+center_X+"aaa") 
 
@@ -457,7 +490,6 @@ namespace WIFI_Camera {
         let xy_flag = 0;
 
         let index = 0
-        let len = 0
         let state = 0
         let IDbuf = ""
         let people_id = 0
@@ -486,29 +518,62 @@ namespace WIFI_Camera {
                 if(strData[index] == "!") //为结束符
                     break
                 IDbuf = IDbuf + strData[index] //把id的数字拿出来
-                len = len+1
+                //len = len+1
             }
             
         }
 
-        // if(IDbuf[0]=="-")//第一个字符为负数
-        // {
-        //     let idbackup = ""
-        //     for(let i = 1;i<len;i++)
-        //     {
-        //         idbackup = idbackup + IDbuf[i]
-        //     }
-        //     people_id = -parseInt(idbackup)
-        // }
-        // else
+        if(state == 0 ) //没id数据的情况
         {
-            serial.writeString("aaa"+IDbuf+"aaa")
-            people_id = parseInt(IDbuf) //会默认区分负数和正数
+            return 0;
         }
+
+        
+        //serial.writeString("aaa"+IDbuf+"aaa")
+
+        people_id = parseInt(IDbuf) //会默认区分负数和正数
         return people_id //返回识别到人脸的序号
 
 
     }
 
+
+    //二维码识别解析QR
+    //% blockId=QR_Data block="QR_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function QR_Data(strData:string):string
+    {
+       let QR_buf = ""
+       let index = 0
+       let state = 0
+
+       while(strData[index] != "\0")
+       {
+           index = index + 1
+
+           if(state == 0)
+           {
+               if(strData[index] == "$")
+               {
+                   state = 1
+               }
+           }
+           else
+           {
+               if(strData[index] == "#") //为结束符
+                   break
+                QR_buf = QR_buf + strData[index] //把识别到的字符拿出来
+           }   
+       }
+
+       if(state == 0 ) //没数据的情况
+       {
+           return "-1";
+       }
+
+       return QR_buf
+    }
 
 }
