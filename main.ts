@@ -347,12 +347,12 @@ namespace WIFI_Camera {
     let center_X = 160; //分辨率是320*240
     let center_Y = 120;
 
-    //猫狗检测的协议解析
-    //% blockId=Cat_Dog_Data block="Cat_Dog_Data %strData"
+    //猫狗检测、人脸检测、颜色识别的协议解析
+    //% blockId=Detection_Data block="Detection_Data %strData"
     //% weight=88
     //% blockGap=10
     //% group="AI MODE"
-    export function Cat_Dog_Data(strData:string):number
+    export function Detection_Data(strData:string):number
     {
         let databuff = ""
         let state = 0
@@ -440,10 +440,73 @@ namespace WIFI_Camera {
         center_X = (RX_int-LX_int)/2
         center_Y = (RY_int-LY_int)/2
 
-        //测试下
-        serial.writeString(""+center_X+"aaa") 
+        // //测试下
+        // serial.writeString(""+center_X+"aaa") 
 
         return 1; //成功
+
+    }
+
+    //人脸识别的协议解析
+    //% blockId=Face_Data block="Face_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function Face_Data(strData:string):number
+    {
+        let xy_flag = 0;
+
+        let index = 0
+        let len = 0
+        let state = 0
+        let IDbuf = ""
+        let people_id = 0
+
+        //解算xy中心点坐标
+        xy_flag = Detection_Data(strData)
+
+        if(xy_flag ==0 ) //xy解算不成功，不往下做2级解算了
+        {
+            return 0;
+        }
+
+        while(strData[index] != "\0")
+        {
+            index = index + 1
+
+            if(state == 0)
+            {
+                if(strData[index] == ":")
+                {
+                    state = 1
+                }
+            }
+            else
+            {
+                if(strData[index] == "!") //为结束符
+                    break
+                IDbuf = IDbuf + strData[index] //把id的数字拿出来
+                len = len+1
+            }
+            
+        }
+
+        // if(IDbuf[0]=="-")//第一个字符为负数
+        // {
+        //     let idbackup = ""
+        //     for(let i = 1;i<len;i++)
+        //     {
+        //         idbackup = idbackup + IDbuf[i]
+        //     }
+        //     people_id = -parseInt(idbackup)
+        // }
+        // else
+        {
+            serial.writeString("aaa"+IDbuf+"aaa")
+            people_id = parseInt(IDbuf) //会默认区分负数和正数
+        }
+        return people_id //返回识别到人脸的序号
+
 
     }
 
