@@ -468,8 +468,8 @@ namespace WIFI_Camera {
         RX_int = parseInt(Rx_str); //字符转成整形
         RY_int = parseInt(Ry_str); //字符转成整形
 
-        center_X = (RX_int-LX_int)/2
-        center_Y = (RY_int-LY_int)/2
+        center_X = (RX_int-LX_int)/2 + LX_int //加上起始点
+        center_Y = (RY_int-LY_int)/2 + LY_int //加上起始点
 
         Area = (RX_int-LX_int)*(RY_int-LY_int)
 
