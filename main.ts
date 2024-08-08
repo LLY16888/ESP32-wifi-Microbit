@@ -1,500 +1,578 @@
-//% blockId=k210_models block="k210_models"
-//%color="#228B22" weight=25
-namespace k210_models {
+//% blockId=WIFI_Camera block="WIFI_Camera"
+//%color="#228B22" weight=25 icon="\uf06e"
+namespace WIFI_Camera {
 
+    export enum AIMODE_selcet
+    {
+        //% blockId="Nornal" block="Nornal"
+        Nornal = 0,
+        //% blockId="Cat_Dog_MODE" block="Cat_Dog_MODE"
+        Cat_Dog_MODE,
+        //% blockId="Face_MODE" block="Face_MODE"
+        Face_MODE,
+        //% blockId="Color_MODE" block="Color_MODE"
+        Color_MODE,
+        //% blockId="Study_Face_MODE" block="Study_Face_MODE"
+        Study_Face_MODE,
+        //% blockId="QR_MODE" block="QR_MODE"
+        QR_MODE, 
+    }
 
-    //% block="init_SerialPort"
-    export function initialization () {
+    export enum KEY_Model
+    {
+        //% blockId="KEY_MENU" block="KEY_MENU"
+        KEY_MENU = 0,
+        //% blockId="KEY_PLAY" block="KEY_PLAY"
+        KEY_PLAY,
+        //% blockId="KEY_UPUP" block="KEY_UPUP"
+        KEY_UPUP,
+        //% blockId="KEY_DOWN" block="KEY_DOWN"
+        KEY_DOWN,
+    }
+
+    export enum MODE_selcet
+    {
+        //% blockId="APOnly" block="APOnly"
+        APOnly = 0,
+        //% blockId="STAOnly" block="STAOnly"
+        STAOnly,
+        //% blockId="AP_STA" block="AP_STA"
+        AP_STA
+    }
+
+    export enum Cmd_Data
+    {
+        //% blockId="forword" block="forword"
+        forword = 1,
+        //% blockId="back" block="back"
+        back,
+        //% blockId="left" block="left"
+        left,
+        //% blockId="right" block="right"
+        right,
+        //% blockId="leftspin" block="leftspin"
+        leftspin,
+        //% blockId="rightspin" block="rightspin"
+        rightspin,
+        //% blockId="stop" block="stop"
+        stop
+    }
+
+    export enum Sever_Data
+    {
+        //% blockId="sevro_vflip" block="sevro_vflip"
+        sevro_vflip,
+
+        //% blockId="sevro_mirror" block="sevro_mirror"
+        sevro_mirror,
+
+        //% blockId="sevro_NONE" block="sevro_NONE"
+        sevro_NONE,
+    }
+
+    //% block="init SerialPort|sendpin %TX|recvpin %RX|buadrate %buadrate"
+    //% group="SET SerialPort"
+    export function initialization (TX:SerialPin,RX:SerialPin,buadrate:BaudRate) {
         serial.redirect(
-        SerialPin.P1,
-        SerialPin.P2,
-        BaudRate.BaudRate115200
+        TX,
+        RX,
+        buadrate
         )
     }
 
-    //% blockId=k210_models_color_reg_X block="reg_X return"
+    //% blockId=setRXbuffSize block="Set RXbuffSize|size %size"
     //% weight=88
     //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function color_reg_X(): number{
-        let  x= 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "01"|| class_num == "05" || class_num == "06") {
-                length = opo.length
-                x = parseFloat(opo.substr(3, 3))
-            } else {
-                x = 0
-            }
-        } else {
-            x = 0
-        }
-        opo = ""
-        return x
-
-    }
-
-    //% blockId=k210_models_color_reg_Y block="reg_Y return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function color_reg_Y(): number{
-        let  y= 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "01"|| class_num == "05" || class_num == "06") {
-                length = opo.length
-                y = parseFloat(opo.substr(7, 3))
-            } else {
-                y = 0
-            }
-        } else {
-            y = 0
-        }
-        opo = ""
-        return y
-
-    }
-
-    //% blockId=k210_models_color_reg_W block="reg_W return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function color_reg_W(): number{
-        let  w= 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "01"|| class_num == "05" || class_num == "06") {
-                length = opo.length
-                w = parseFloat(opo.substr(11, 3))
-            } else {
-                w = 0
-            }
-        } else {
-            w = 0
-        }
-        opo = ""
-
-        return w
-
-    }    
-
-    //% blockId=k210_models_color_reg_H block="reg_H return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function color_reg_H(): number{
-        let  h= 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "01"|| class_num == "05" || class_num == "06") {
-                length = opo.length
-                h = parseFloat(opo.substr(15, 3))
-            } else {
-                h = 0
-            }
-        } else {
-            h = 0
-        }
-        opo = ""
-        return h
-
-    }
-
-
-
-    //% blockId=k210_models_Barcode_Sensor block="Barcode scan return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function Barcode_Sensor(): string {
-        let apriltag = ""
-        let L = 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "02") {
-                length = opo.length
-                L = length - 4
-                apriltag = opo.substr(3, L)
-            } else {
-                apriltag = ""
-            }
-        } else {
-            apriltag = ""
-        }
-        opo = ""
-        return apriltag
-
-    }
-
-    //% blockId=k210_models_QRcode_Sensor block="QRcode scan return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function QRcode_Sensor(): string {
-        let apriltag = ""
-        let L = 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "03") {
-                length = opo.length
-                L = length - 4
-                apriltag = opo.substr(3, L)
-            } else {
-                apriltag = " "
-            }
-        } else {
-            apriltag = " "
-        }
-        opo = ""
-        return apriltag
-
-    }
-    
-    //% blockId=k210_models_Apriltag block="Apriltag Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function Apriltag_Sensor(): string {
-        let apriltag = ""
-        let class_num = ""
-        let L = 0
-        let length = 0
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "04") {
-                length = opo.length
-                L = length - 5
-                apriltag = opo.substr(3, L)
-            } else {
-                apriltag = ""
-            }
-        } else {
-            apriltag = ""
-        }
-        opo = ""
-        return apriltag
-
-    }
-
-
-
-
-
-    //% blockId=k210_models_face_mask_detect block="face_mask Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function face_mask_detect():string{
-        let face = ""
-        let class_num = ""
-        let _22 = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            _22 = opo[3]
-            if (class_num == "07") {
-                if (_22 == "1" || _22 == "Y" ) {
-                    face = "Y"
-                } else {
-                    face = "N"
-                }
-            } else {
-                face = ""
-            }
-        } else {
-            face = ""
-        }
-        opo = ""
-        return face
-
-    }
-
-
-        //% blockId=k210_models_face_reg block="face_reg Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function face_reg(): number{
-        let face = 0
-        let _22 = ""
-        let class_num = ""
-        let opo = ""
-        let face_Reg = 0
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            _22 = opo[3]
-            face_Reg = parseFloat("" + opo[4] + opo[5])
-            if (class_num == "08") {
-                if (_22 == "Y") {
-                    face = face_Reg
-                } else {
-                    face = -1
-                }
-            } else {
-                face = -2
-            }
-        } else {
-            face = -2
-        }
-        opo = ""
-        return face
-
-    }
-
-let len = 0
-let object = ""
-    //% blockId=k210_models_object_detect block="object_detct Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function object_detect():string{
-        let object = ""
-        let L = 0
-        let length = 0
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "09") {
-                length = opo.length
-                L = length - 4
-                object = opo.substr(3, L)
-            } else {
-                object = ""
-            }
-        } else {
-            object = ""
-        }
-        opo = ""
-        return object
-    }
-
-    //% blockId=k210_models_self_learning block="self_learning Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function self_learning():number{
-        let Learning = -1
-        let opo = ""
-        let class_num = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "10") {
-                Learning = parseFloat(opo[3])
-            } else {
-                Learning = -1
-            }
-        } else {
-            Learning = -1
-        }
-        opo = ""
-        return Learning
-    }
-
-
-    //% blockId=k210_models_handwriting_number block="handwriting_number return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function handwriting_number():number{
-        let number = -1
-        let opo = ""
-        let class_num = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "11") {
-                number = parseFloat(opo[3])
-            } else {
-                number = -1
-            }
-        } else {
-            number = -1
-        }
-        opo = ""
-        return number
-    }
-
-    //% blockId=k210_models_Color_Sensor block="Color scan return"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function Color_Sensor(): string {
-        let Color = ""
-        let class_num = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "01") {
-                Color = opo.substr(3, 1)
-            } else {
-                Color = ""
-            }
-        } else {
-            Color = ""
-        }
-        opo = ""
-        return Color
-
-    }     
-
-    //% blockId=k210_models_Apriltag_id block="Apriltag_id return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function Apriltag_id(): string {
-        let Apriltag_id = ""
-        let class_num = "" 
-        let opo = ""        
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            if (class_num == "04") {
-                Apriltag_id = "" + opo[3] + opo[4]
-            } else {
-                Apriltag_id = ""
-            }
-        } else {
-            Apriltag_id = ""
-        }
-        opo = ""
-        return Apriltag_id
-
-    }    
-
-
-
-    //% blockId=k210_models_face_detect block="face_detect Scan return"
-    //% weight=100
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=30
-    export function face_detect():string{
-        let face = ""
-        let class_num = ""
-        let _22 = ""
-        let opo = ""
-        opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-        if (opo[0] == "$") {
-            class_num = "" + opo[1] + opo[2]
-            _22 = opo[3]
-            if (class_num == "14") {
-                if (_22 == "1") {
-                    face = "Y"
-                } else {
-                    face = "N"
-                }
-            } else {
-                face = ""
-            }
-        } else {
-            face = ""
-        }
-        opo = ""
-        return face
-    }   
-    
-
-    let  speed_L= 0
-    let  speed_R= 0
-
-    //% blockId=k210_models_get_speed block="analysis speed"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function get_motor_speed(){
-        
-     let class_num = ""
-     let opo = ""
-     opo = serial.readUntil(serial.delimiters(Delimiters.Hash))
-     if (opo[0] == "$") 
-     {
-        class_num = "" + opo[1] + opo[2]
-        if (class_num == "20") 
-        {
-            //左电机
-            if(opo[3]=="+")//速度为正
-            {
-                speed_L = parseFloat(opo.substr(4, 3))
-            }
-            else if(opo[3]=="-")
-            {
-                speed_L = -(parseFloat(opo.substr(4, 3)))
-            }
-
-            //右电机
-            if(opo[7]=="+")//速度为正
-            {
-                speed_R = parseFloat(opo.substr(8, 3))
-            }
-            else if(opo[7]=="-")
-            {
-                speed_R = -(parseFloat(opo.substr(8, 3)))
-            }
-        } 
-         else 
-        {
-            speed_L = 0
-            speed_R = 0
-        }
-     } 
-     else 
-     {
-        speed_L = 0
-        speed_R = 0
-     }
-     opo = ""
-     }
-
-
-    //% blockId=k210_models_speed_L block="get left motor"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function get_motor_L(): number
-    {  
-        return speed_L
-    }
-
-     //% blockId=k210_models_speed_R block="get right motor"
-    //% weight=88
-    //% blockGap=10
-    //% name.fieldEditor="gridpicker" name.fieldOptions.columns=12
-    export function get_motor_R(): number
+    //% group="SET SerialPort"
+    export function setRXbuffSize(size:number)
     {
-        return speed_R
+        serial.setRxBufferSize(size)
+    }
+    
+    //% blockId=setTXbuffSize block="Set TXbuffSize|size %size"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET SerialPort"
+    export function setTXbuffSize(size:number)
+    {
+        serial.setTxBufferSize(size)
     }
 
+    //wifi模式配置
+    //% blockId=setWifiMode block="Set Wifi Mode Selcet %mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET WIFI MODE"
+    export function setWifiMode(mode:MODE_selcet)
+    {
+        switch (mode)
+        {
+            case MODE_selcet.APOnly: serial.writeString("wifi_mode:0"); break;
+            case MODE_selcet.STAOnly:serial.writeString("wifi_mode:1"); break;
+            case MODE_selcet.AP_STA: serial.writeString("wifi_mode:2"); break;
+        }
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
+
+       
+    }
+
+    //wifi配置 sta模式
+
+    //% blockId=setSTASSID block="set STA SSID|wifi name %SSID"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET STA WIFI"
+    export function setSTASSID(SSID:string)
+    {
+        serial.writeString("sta_ssid:"+SSID)
+        basic.pause(500) 
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //% blockId=setSTAPD block="set STA PASSWord|wifi password %Password"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET STA WIFI"
+    export function setSTAPD(Password:string)
+    {
+        serial.writeString("sta_pd:"+Password)
+        basic.pause(4000)//等待重启成功
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //wifi配置 ap模式
+
+    //% blockId=setAPSSID block="set AP SSID|wifi name %SSID"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET AP WIFI"
+    export function setAPSSID(SSID:string)
+    {
+        serial.writeString("ap_ssid:"+SSID)
+        basic.pause(500)
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //% blockId=setAPPD block="set AP PASSWord|wifi password %Password"
+    //% weight=88
+    //% blockGap=10
+    //% group="SET AP WIFI"
+    export function setAPPD(Password:string)
+    {
+        serial.writeString("ap_pd:"+Password)
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //% blockId=GET_AP_IP block="GET_AP_IP"
+    //% weight=88
+    //% blockGap=10
+    //% group="GET WIFI IP"
+    export function GET_AP_IP():string
+    {
+        serial.writeString("ap_ip")
+        return serial.readUntil(serial.delimiters(Delimiters.NewLine))
+    }
+
+    //% blockId=GET_STA_IP block="GET_STA_IP"
+    //% weight=88
+    //% blockGap=10
+    //% group="GET WIFI IP"
+    export function GET_STA_IP():string
+    {
+        serial.writeString("sta_ip")
+        return serial.readUntil(serial.delimiters(Delimiters.NewLine))
+        
+    }
+
+    //% blockId=GET_Version block="GET_Version"
+    //% weight=88
+    //% blockGap=10
+    //% group="GET WIFI Version"
+    export function GET_Version():string
+    {
+        serial.writeString("wifi_ver")
+        return serial.readUntil(serial.delimiters(Delimiters.NewLine))
+    }
+
+    //% blockId=GET_controlData block="GET_Control_Data"
+    //% weight=88
+    //% blockGap=10
+    //% group="GET Data"
+    export function GET_controlData():string
+    {
+        let buff
+        buff = serial.readString()
+        return buff
+    }
+
+    //% blockId=CarControl block="Control_Car %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="Car control"
+    export function CarControl(value:Cmd_Data):string
+    {
+        let databuff = "$1,0,0,0#"
+        switch(value)
+        {
+            case Cmd_Data.forword:databuff = "$1,0,0,0#";   break
+            case Cmd_Data.back:databuff = "$2,0,0,0#";      break
+            case Cmd_Data.left:databuff = "$3,0,0,0#";      break
+            case Cmd_Data.right:databuff = "$4,0,0,0#";     break
+            case Cmd_Data.leftspin:databuff = "$5,0,0,0#";  break
+            case Cmd_Data.rightspin:databuff = "$6,0,0,0#"; break
+            case Cmd_Data.stop:databuff = "$7,0,0,0#";      break
+        }
+
+        return databuff
+    }
+
+
+    let  sevro_vflip_angle = 0; //上下方向舵机角度
+    let  sevro_mirror_angle = 0;//左右方向舵机角度
+
+    //% blockId=Servodirection block="direction_Servo %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Servodirection(strData:string):Sever_Data
+    {
+        let dataflag = Sever_Data.sevro_NONE //什么数据都没有
+
+        let databuff = ""
+        let angle = 90
+
+        if(strData[0] == "$")//满足包头包尾
+            if(strData[5] == "#")
+            {
+                if (strData[1] == "A")  //$A180# 垂直方向
+                {
+                    databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                    angle = parseInt(databuff); //字符转成整形
+                    sevro_vflip_angle = angle; //赋值
+                    dataflag = Sever_Data.sevro_vflip
+                } 
+        
+                else if(strData[1] == "B") //$B090# 水平方向
+                {
+                    databuff = ""+strData[2]+strData[3]+strData[4] //转成角度
+                    angle = parseInt(databuff); //字符转成整形
+                    sevro_mirror_angle = angle; //赋值
+                    dataflag = Sever_Data.sevro_mirror
+                }
+
+            }
+        
+        return dataflag
+    }
+
+    //% blockId=Servo_Control block="Servo_Control %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Servo_Control(value:Sever_Data):Sever_Data
+    {
+        switch(value)
+        {
+            case Sever_Data.sevro_mirror: return Sever_Data.sevro_mirror
+            case Sever_Data.sevro_vflip: return Sever_Data.sevro_vflip
+        }
+        return Sever_Data.sevro_NONE
+
+    }
+
+
+
+    //% blockId=Get_vflip_Servoangle block="Get vflip Servo angle"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Get_vflip_Servoangle():number
+    {
+        return sevro_vflip_angle
+    }
+
+    //% blockId=Get_mirror_Servoangle block="Get mirror Servo angle"
+    //% weight=88
+    //% blockGap=10
+    //% group="Servo"
+    export function Get_mirror_Servoangle():number
+    {
+        return sevro_mirror_angle
+    }
+
+    //AI模式配置
+    //% blockId=setAIMode block="Set AI Mode Selcet %mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function setAIMode(mode:AIMODE_selcet)
+    {
+        switch (mode)
+        {
+            case AIMODE_selcet.Nornal: serial.writeString("ai_mode:0"); break;
+            case AIMODE_selcet.Cat_Dog_MODE:serial.writeString("ai_mode:1"); break;
+            case AIMODE_selcet.Face_MODE: serial.writeString("ai_mode:2"); break;
+            case AIMODE_selcet.Color_MODE: serial.writeString("ai_mode:3"); break;
+            case AIMODE_selcet.Study_Face_MODE:serial.writeString("ai_mode:4"); break;
+            case AIMODE_selcet.QR_MODE: serial.writeString("ai_mode:5"); break;
+        }
+        basic.pause(4000)
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    //虚拟按键
+    //% blockId=SendKEY block="SendKEY %mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function SendKEY(mode:KEY_Model)
+    {
+        switch (mode)
+        {
+            case KEY_Model.KEY_MENU: serial.writeString("KEY_MENU"); break;
+            case KEY_Model.KEY_PLAY: serial.writeString("KEY_PLAY"); break;
+            case KEY_Model.KEY_UPUP: serial.writeString("KEY_UPUP"); break;
+            case KEY_Model.KEY_DOWN: serial.writeString("KEY_DOWN"); break;
+        }
+        serial.readString() //目的是为了清掉缓存
+    }
+
+    
+    let LX_int = 0;
+    let LY_int = 0;
+    let RX_int = 0;
+    let RY_int = 0;
+    let center_X = 160; //分辨率是320*240
+    let center_Y = 120;
+    let Area = 0; //面积
+
+    //获取中心点X轴方向
+    //% blockId=GET_CX block="GET_CX"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_CX():number
+    {
+        return center_X
+    }
+
+    //获取中心点Y轴方向
+    //% blockId=GET_CY block="GET_CY"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_CY():number
+    {
+        return center_Y
+    }
+
+    //获取第一个框的面积
+    //% blockId=GET_Area block="GET_Area"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function GET_Area():number
+    {
+        return Area
+    }
+
+    //猫狗检测、人脸检测、颜色识别的协议解析
+    //% blockId=Detection_Data block="Detection_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function Detection_Data(strData:string):number
+    {
+        let databuff = ""
+        let state = 0
+        let index = 0
+        let len = 0
+
+        let Lx_str = ""
+        let Ly_str = ""
+        let Rx_str = ""
+        let Ry_str = ""
+
+        while(strData[index] != "\0")//先把有效数据复制出来
+        {
+            if(state == 0)
+            {
+                if(strData[index] == "$")//满足包头
+                {
+                    state = 1
+                    databuff = "$"
+                }
+            }
+            else if(state == 1)
+            {
+                databuff = databuff + strData[index]
+            }
+            
+
+            if(strData[index] == "#")//满足包尾
+            {
+                index= index+1
+                len = index
+                index = 1 //索引变1 ，方便后面去掉包头
+                break;
+            }
+            else
+            {
+                index= index+1
+            }
+             
+
+        }
+        if (state == 0)//当数据不存在
+        {
+            return 0;
+        }
+
+        //解算左上角xy 右下角xy $180,240,#
+        while(databuff[index]!=",") //不为英文","
+        {
+            //左上角X
+            Lx_str = Lx_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //左上角Y
+            Ly_str = Ly_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //右下角X
+            Rx_str = Rx_str + databuff[index];
+            index = 1+ index;
+        }
+        index = 1+ index; //去掉上一个逗号
+
+        while(databuff[index]!=",") //不为英文","
+        {
+            //右下角Y
+            Ry_str = Ry_str + databuff[index];
+            index = 1+ index;
+        }
+
+        //把字符变整数
+        LX_int = parseInt(Lx_str); //字符转成整形
+        LY_int = parseInt(Ly_str); //字符转成整形
+        RX_int = parseInt(Rx_str); //字符转成整形
+        RY_int = parseInt(Ry_str); //字符转成整形
+
+        center_X = (RX_int-LX_int)/2 + LX_int //加上起始点
+        center_Y = (RY_int-LY_int)/2 + LY_int //加上起始点
+
+        Area = (RX_int-LX_int)*(RY_int-LY_int)
+
+        // //测试下
+        // serial.writeString(""+center_X+"aaa") 
+
+        return 1; //成功
+
+    }
+
+    //人脸识别的协议解析
+    //% blockId=Face_Data block="Face_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function Face_Data(strData:string):number
+    {
+        let xy_flag = 0;
+
+        let index = 0
+        let state = 0
+        let IDbuf = ""
+        let people_id = 0
+
+        //解算xy中心点坐标
+        xy_flag = Detection_Data(strData)
+
+        if(xy_flag ==0 ) //xy解算不成功，不往下做2级解算了
+        {
+            return 0;
+        }
+
+        while(strData[index] != "\0")
+        {
+            index = index + 1
+
+            if(state == 0)
+            {
+                if(strData[index] == ":")
+                {
+                    state = 1
+                }
+            }
+            else
+            {
+                if(strData[index] == "!") //为结束符
+                    break
+                IDbuf = IDbuf + strData[index] //把id的数字拿出来
+                //len = len+1
+            }
+            
+        }
+
+        if(state == 0 ) //没id数据的情况
+        {
+            return 0;
+        }
+
+        
+        //serial.writeString("aaa"+IDbuf+"aaa")
+
+        people_id = parseInt(IDbuf) //会默认区分负数和正数
+        return people_id //返回识别到人脸的序号
+
+
+    }
+
+
+    //二维码识别解析QR
+    //% blockId=QR_Data block="QR_Data %strData"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function QR_Data(strData:string):string
+    {
+       let QR_buf = ""
+       let index = 0
+       let state = 0
+
+       while(strData[index] != "\0")
+       {
+           if(state == 0)
+           {
+               if(strData[index] == "$")
+               {
+                   state = 1
+               }
+           }
+           else
+           {
+               if(strData[index] == "#") //为结束符
+                   break
+                QR_buf = QR_buf + strData[index] //把识别到的字符拿出来
+           } 
+           index = index + 1  
+       }
+
+       if(state == 0 ) //没数据的情况
+       {
+           return "0";
+       }
+       
+       return QR_buf
+    }
 
 }
