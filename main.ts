@@ -388,7 +388,8 @@ namespace WIFI_Camera {
         let databuff = ""
         let state = 0
         let index = 0
-        let len = 0
+        let duohao_num = 0 //逗号标志
+        let len =0
 
         let Lx_str = ""
         let Ly_str = ""
@@ -407,6 +408,14 @@ namespace WIFI_Camera {
             }
             else if(state == 1)
             {
+                if(strData[index] == "$")
+                {
+                    return 0; //当真实的数据也有包头，说明掉包
+                }
+                else if(strData[index] == ",")
+                {
+                    duohao_num = duohao_num+1
+                }
                 databuff = databuff + strData[index]
             }
             
@@ -414,9 +423,14 @@ namespace WIFI_Camera {
             if(strData[index] == "#")//满足包尾
             {
                 index= index+1
-                len = index
                 index = 1 //索引变1 ，方便后面去掉包头
-                break;
+
+                if(duohao_num!=4)//当改包数据不满足4个逗号，说明丢失数据
+                {
+                    return 0;
+                }
+
+                break; //满足即解算
             }
             else
             {
@@ -440,16 +454,26 @@ namespace WIFI_Camera {
             //左上角X
             Lx_str = Lx_str + databuff[index];
             index = 1+ index;
+
+            len = len + 1
+            if(len >3) return 0;//数据出错
         }
         index = 1+ index; //去掉上一个逗号
+        len = 0
+
+        
 
         while(databuff[index]!=",") //不为英文","
         {
             //左上角Y
             Ly_str = Ly_str + databuff[index];
             index = 1+ index;
+
+            len = len + 1
+            if(len >3) return 0;//数据出错
         }
         index = 1+ index; //去掉上一个逗号
+        len = 0
 
         while(databuff[index]!=",") //不为英文","
         {
@@ -458,12 +482,16 @@ namespace WIFI_Camera {
             index = 1+ index;
         }
         index = 1+ index; //去掉上一个逗号
+        len = 0
 
         while(databuff[index]!=",") //不为英文","
         {
             //右下角Y
             Ry_str = Ry_str + databuff[index];
             index = 1+ index;
+
+            len = len + 1
+            if(len >3) return 0;//数据出错
         }
 
         //把字符变整数
@@ -478,7 +506,7 @@ namespace WIFI_Camera {
         Area = (RX_int-LX_int)*(RY_int-LY_int)
 
         // //测试下
-        // serial.writeString(""+center_X+"aaa") 
+        serial.writeString("aaa"+Area+"aaa") 
 
         return 1; //成功
 
