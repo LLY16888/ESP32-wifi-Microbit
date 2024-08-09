@@ -395,7 +395,7 @@ namespace WIFI_Camera {
         let Rx_str = ""
         let Ry_str = ""
 
-        while(strData[index] != "\0")//先把有效数据复制出来
+        while(strData[index] != "")//先把有效数据复制出来
         {
             if(state == 0)
             {
