@@ -421,6 +421,10 @@ namespace WIFI_Camera {
             else
             {
                 index= index+1
+                if(index > 30)//长度过长 ,出现没有“#”的丢包
+                {
+                    return 0; //直接结束
+                }
             }
              
 
@@ -564,7 +568,12 @@ namespace WIFI_Camera {
                    break
                 QR_buf = QR_buf + strData[index] //把识别到的字符拿出来
            } 
-           index = index + 1  
+           index = index + 1
+
+           if(index > 50)//长度过长 ,出现没有“#”的丢包 二维码是内容不要超50个字符
+            {
+                return "0"; //直接结束
+            }
        }
 
        if(state == 0 ) //没数据的情况
