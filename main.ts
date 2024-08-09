@@ -480,6 +480,9 @@ namespace WIFI_Camera {
             //右下角X
             Rx_str = Rx_str + databuff[index];
             index = 1+ index;
+
+            len = len + 1
+            if(len >3) return 0;//数据出错
         }
         index = 1+ index; //去掉上一个逗号
         len = 0
@@ -506,7 +509,7 @@ namespace WIFI_Camera {
         Area = (RX_int-LX_int)*(RY_int-LY_int)
 
         // //测试下
-        serial.writeString("aaa"+Area+"aaa") 
+        //serial.writeString("aaa"+Area+"aaa") 
 
         return 1; //成功
 
