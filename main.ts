@@ -348,6 +348,36 @@ namespace WIFI_Camera {
     let center_Y = 120;
     let Area = 0; //面积
 
+     //设置取中心点X轴方向
+    //% blockId=GET_CX block="SET_CX %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function SET_CX(value:number)
+    {
+        center_X = value
+    }
+
+    //设置中心点Y轴方向
+    //% blockId=GET_CY block="SET_CY %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function SET_CY(value:number)
+    {
+        center_Y = value
+    }
+
+    //设置框的面积
+    //% blockId=GET_Area block="SET_Area %value"
+    //% weight=88
+    //% blockGap=10
+    //% group="AI MODE"
+    export function SET_Area(value:number)
+    {
+        Area = value
+    }
+
     //获取中心点X轴方向
     //% blockId=GET_CX block="GET_CX"
     //% weight=88

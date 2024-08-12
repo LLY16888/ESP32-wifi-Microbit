@@ -58,6 +58,9 @@
 
   "WIFI_Camera.setAIMode|block":"設置AI模式 %mode",
   "WIFI_Camera.SendKEY|block":"虛擬按鍵 %mode",
+  "WIFI_Camera.SET_CX|block":"設置识别框X方向的中心点位置 %value",
+  "WIFI_Camera.SET_CY|block":"設置识别框Y方向的中心点位置 %value",
+  "WIFI_Camera.SET_Area|block":"設置识别框面积的大小 %value",
   "WIFI_Camera.GET_CX|block":"獲取識別框X方向的中心點位置",
   "WIFI_Camera.GET_CY|block":"獲取識別框Y方向的中心點位置",
   "WIFI_Camera.GET_Area|block":"獲取識別框面積的大小",
