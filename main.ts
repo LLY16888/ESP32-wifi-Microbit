@@ -439,13 +439,17 @@ namespace WIFI_Camera {
                 {
                     return 0; //直接结束
                 }
-            }
-             
-
+            }     
         }
+        
         if (state == 0)//当数据不存在
         {
             return 0;
+        }
+
+        if(databuff.length != 18)//不是正常完整的数据也跳过 $xxx,yyy,xxx,yyy,#
+        {
+            return
         }
 
         //解算左上角xy 右下角xy $180,240,#
