@@ -449,7 +449,7 @@ namespace WIFI_Camera {
 
         if(databuff.length != 18)//不是正常完整的数据也跳过 $xxx,yyy,xxx,yyy,#
         {
-            return
+            return 0;
         }
 
         //解算左上角xy 右下角xy $180,240,#
