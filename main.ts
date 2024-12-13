@@ -650,3 +650,148 @@ namespace WIFI_Camera {
     }
 
 }
+
+
+//IIC
+//% blockId=CameraLite_IIC block="IIC_Control"
+//%color="#228B22" weight=25 icon="\uf0c2"
+namespace CameraLite_IIC {
+    //I2C addr
+    const ESP32_Camera_ADDR = 0x33
+    //reg
+    const level_reg =0x01 //摄像头水平寄存器 Camera horizontal register
+	const vertical_reg = 0x02//摄像头垂直寄存器 Camera vertical register
+	const Model_reg = 0x03 //模式选择寄存器 Mode selection register
+	
+	const Virtual_key_reg = 0x08 //虚拟按键寄存器 Virtual key register
+
+    const Middle_X_Hreg = 0x28
+	const Middle_X_Lreg = 0x29
+	const Middle_Y_Hreg = 0x2A
+	const Middle_Y_Lreg = 0x2B
+	const Face_ID_Hreg = 0x2C
+	const Face_ID_Lreg = 0x2D
+
+    
+    export enum IIC_bool
+    {
+        //% blockId="Flase" block="Flase"
+        Flase = 0,
+        //% blockId="True" block="True"
+        True = 1,
+    }
+
+    export enum IIC_KEY_Model
+    {
+        //% blockId="KEY_MENU" block="KEY_MENU"
+        KEY_MENU = 1,
+        //% blockId="KEY_PLAY" block="KEY_PLAY"
+        KEY_PLAY,
+        //% blockId="KEY_UPUP" block="KEY_UPUP"
+        KEY_UPUP,
+        //% blockId="KEY_DOWN" block="KEY_DOWN"
+        KEY_DOWN,
+    }
+
+    export enum IIC_AI_selcet
+    {
+        //% blockId="Nornal" block="Nornal"
+        Nornal = 0,
+        //% blockId="Cat_Dog_MODE" block="Cat_Dog_MODE"
+        Cat_Dog_MODE,
+        //% blockId="Face_MODE" block="Face_MODE"
+        Face_MODE,
+        //% blockId="Color_MODE" block="Color_MODE"
+        Color_MODE,
+        //% blockId="Study_Face_MODE" block="Study_Face_MODE"
+        Study_Face_MODE,
+        //% blockId="QR_MODE" block="QR_MODE"
+        QR_MODE, 
+    }
+
+
+    //设置画面的水平方向
+    //% blockId=SET_Level_Mode block="SET_Level_Mode|Switch %Mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="IIC Write"
+    export function SET_Level_Mode(Mode:IIC_bool):void{
+        let buf = pins.createBuffer(2);
+        buf[0] = level_reg;
+        buf[1] = Mode;
+        for(let i = 0;i<5;i++)//发送5次，以确保配置成功
+        {
+            pins.i2cWriteBuffer(ESP32_Camera_ADDR, buf);
+            basic.pause(100);
+        }
+        
+    }
+
+    //设置画面的垂直方向
+    //% blockId=SET_vertical_Mode block="SET_vertical_Mode|Switch %Mode"
+    //% weight=88
+    //% blockGap=10
+    //% group="IIC Write"
+    export function SET_vertical_Mode(Mode:IIC_bool):void{
+        let buf = pins.createBuffer(2);
+        buf[0] = Model_reg;
+        buf[1] = Mode;
+        for(let i = 0;i<5;i++)//发送5次，以确保配置成功
+        {
+            pins.i2cWriteBuffer(ESP32_Camera_ADDR, buf);
+            basic.pause(100);
+        }
+        
+    }
+
+    //设置AI模式选择
+    //% blockId=IIC_SET_AI_Mode block="IIC_SET_AI_Mode|AIMode %AIMode"
+    //% weight=88
+    //% blockGap=10
+    //% group="IIC Write"
+    export function IIC_SET_AI_Mode(AIMode:IIC_KEY_Model):void{
+        let buf = pins.createBuffer(2);
+        buf[0] = vertical_reg;
+        buf[1] = AIMode;
+        pins.i2cWriteBuffer(ESP32_Camera_ADDR, buf);
+        basic.pause(100);
+        
+    }
+
+    //设置虚拟按键
+    //% blockId=IIC_SET_KEY block="IIC_SET_KEY|KEY %KEYData"
+    //% weight=88
+    //% blockGap=10
+    //% group="IIC Write"
+    export function IIC_SET_KEY(KEYData:IIC_KEY_Model):void{
+        let buf = pins.createBuffer(2);
+        buf[0] = Virtual_key_reg;
+        buf[1] = KEYData;
+        pins.i2cWriteBuffer(ESP32_Camera_ADDR, buf);
+        basic.pause(100); 
+    }
+
+
+
+
+
+    //  //获取红外传感器部分
+    // //默认都检测到黑线，即信号为0
+    // let x1 = 0;
+    // let x2 = 0;
+    // let x3 = 0;
+    // let x4 = 0;
+    // let irtrack_data = 0;
+    // function get_irtrack():number
+    // {
+    //     pins.i2cWriteNumber(Microbit_Car_ADDR,IRTRACKING,NumberFormat.UInt8LE,true);
+    //     let data = pins.i2cReadNumber(Microbit_Car_ADDR, NumberFormat.UInt8LE, false);
+    //     return data
+    // }
+
+
+
+
+
+
+}
