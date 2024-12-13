@@ -84,6 +84,7 @@
   "CameraLite_IIC|block":"IIC接口控制",
   "{id:category}CameraLite_IIC":"IIC接口控制",
   "{id:group}IIC Write": "IIC寫入",
+  "{id:group}IIC Read": "IIC讀取",
 
   "CameraLite_IIC.IIC_bool.Flase|block":"Flase",
   "CameraLite_IIC.IIC_bool.True|block":"True",
@@ -106,7 +107,12 @@
   "CameraLite_IIC.SET_Level_Mode|block":"設置攝像頭是否水平反轉 %Mode",
   "CameraLite_IIC.SET_vertical_Mode|block":"設置攝像頭是否垂直反轉 %Mode",
   "CameraLite_IIC.IIC_SET_AI_Mode|block":"IIC設置AI模式 %AIMode",
-  "CameraLite_IIC.IIC_SET_KEY|block":"IIC發送虛擬按鍵 %KEYData"
+  "CameraLite_IIC.IIC_SET_KEY|block":"IIC發送虛擬按鍵 %KEYData",
+
+  "CameraLite_IIC.IICGet_Camera_Data|block":"獲取攝像頭數據|延遲時間 %delay_time",
+  "CameraLite_IIC.IICGET_CX|block":"IIC獲取識別框中心的X軸數據",
+  "CameraLite_IIC.IICGET_CY|block":"IIC獲取識別框中心的Y軸數據",
+  "CameraLite_IIC.IICGET_ID|block":"IIC獲取人臉識別的ID"
 
 }
 
